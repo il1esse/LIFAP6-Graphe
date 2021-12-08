@@ -1,13 +1,21 @@
-all: bin/main.ex
+all: bin/main.ex bin/test.ex
 
 bin/main.ex: obj/main.o obj/graphe.o
 	g++ -ggdb obj/main.o obj/graphe.o -o bin/main.ex
+
+bin/test.ex: obj/test.o
+	g++ -ggdb obj/test.o -o bin/test.ex
+
 
 obj/main.o: src/main.cpp src/graphe.h
 	g++ -ggdb -Wall -c src/main.cpp -o obj/main.o
 
 obj/graphe.o : src/graphe.cpp src/graphe.h
 	g++ -ggdb -Wall -c src/graphe.cpp -o obj/graphe.o
+
+obj/test.o : src/test.cpp 
+	g++ -ggdb -Wall -c src/test.cpp -o obj/test.o
+
 
 clean :
 	-rm obj/*.o 

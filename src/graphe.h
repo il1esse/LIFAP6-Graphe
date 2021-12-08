@@ -12,20 +12,23 @@ class graphe
 
     graphe(int i,int j);
 
-    ~graphe();
+    //~graphe();
+    void initialiser_graphe();
+    void affichergraphe();
+    int voisins(int cases,char choix);
+    int distance(int casedepart, int casearr); 
+    void initialiser_graphe_fichier(const char * nomFichier);
 
     private:
 
     int nbligne;
     int nbcolonne;
 
-
+    
     int tabgraph[maxtab];
 
-    void initialiser_graphe();
-
-    int voisins(int cases,char choix);
+    
 
 
 };
-#endif _GRAPHE
+#endif
