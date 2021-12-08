@@ -52,15 +52,15 @@ void litFichierEntiers(const char * nomFichier)
 
 int main()
 {
-
-  /*char fich[100]; 
+  /*
+  char fich[100]; 
   int n;
   std::cout << "Entrez le nom du fichier d'entiers a creer" << std::endl;
   std::scanf("%99s",fich);
   std::cout << "Combien d'entiers dans ce fichier ?" << std::endl;
   std::cin >> n;
   creeFichierEntiers(fich,n);
-  //std::cout << "Affichage des entiers contenu dans le fichier" << std::endl;*/
-  litFichierEntiers("fich");
+  std::cout << "Affichage des entiers contenu dans le fichier" << std::endl;*/
+  litFichierEntiers("b");
   return 0;
 }

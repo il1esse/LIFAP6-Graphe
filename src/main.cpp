@@ -5,8 +5,8 @@ using namespace std;
 int main()
 {
     graphe graphe1(10,10);
-    graphe1.initialiser_graphe_fichier("b.txt");
-    //graphe1.affichergraphe();
+    graphe1.initialiser_graphe_fichier("a");
+    graphe1.affichergraphe();
     int a = graphe1.voisins(0,'N');
     int b = graphe1.voisins(0,'S');
     int c = graphe1.voisins(0,'E');

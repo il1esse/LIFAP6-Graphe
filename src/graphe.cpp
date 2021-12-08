@@ -36,16 +36,16 @@ void graphe::initialiser_graphe_fichier(const char * nomFichier)
   int i=0;
   while(ifs >> temp)
   {
-      cout<<temp;
-      /*tabgraph[i] = temp;
-      i=i+1;*/
+      //cout<<temp;
+      tabgraph[i] = temp;
+      i=i+1;
   }
   ifs.close();
 }
 
 void graphe::affichergraphe()
 {
-    cout<<"Voice le graphe avec "<<nbligne <<" lignes et "<<nbcolonne<<" colonnes :"<<endl;
+    cout<<"Voici le graphe avec "<<nbligne <<" lignes et "<<nbcolonne<<" colonnes :"<<endl;
 
     for(int i=0; i <maxtab;i++)
     {
