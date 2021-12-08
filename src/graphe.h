@@ -2,7 +2,7 @@
 #define _GRAPHE
 
 enum Couleur{ blanc=0, grey, noir};
-
+const int maxtab=100;
 
 //enum Couleur toto=grey;
 
@@ -18,9 +18,9 @@ class graphe
 
     int nbligne;
     int nbcolonne;
-    int maxtab=nbligne*nbcolonne;
 
-    int tabgraph[100000000];
+
+    int tabgraph[maxtab];
 
     void initialiser_graphe();
 
