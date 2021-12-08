@@ -3,59 +3,59 @@
 #include <string>
 #include <random>
 
-GRAPHE::graphe(int i,int j)
+graphe::graphe(int i,int j)
 {
     nbligne = i;
     nbcolonne = j;
 
 }
 
-GRAPHE::initialiser_graphe()
+void graphe::initialiser_graphe()
 {
-    for(i=0;i<maxtab;i++)
+    for(int i=0;i<maxtab;i++)
     {
-        int r = rand%101;
+        int r = rand()%101;
         tabgraph[i] = r;
     } 
 }
 
-int GRAPHE::voisins(int case,char choix)
+int graphe::voisins(int cases,char choix)
 {
-    convertion_case_i = case / (nbligne-1)
-    conversion_case_j = case % (nbcolonne-1);
+    int convertion_cases_i = cases / (nbligne-1);
+    int conversion_cases_j = cases % (nbcolonne-1);
     if(choix == 'N')
     {
-        if(case < nbcolonne)
+        if(cases < nbcolonne)
         {
             return -1; 
         }
-        return (case-nbcolonne);
+        return (cases-nbcolonne);
     }
 
     if(choix == 'S')
     {
-        if(case > (nbcolonne*nbligne-1))
+        if(cases > (nbcolonne*nbligne-1))
         {
             return -1; 
         }
-        return (case+nbcolonne);
+        return (cases+nbcolonne);
     }
 
     if(choix == 'O')
     {
-        if(case < (conversion_case_j == 0))
+        if(cases < (conversion_cases_j == 0))
         {
             return -1; 
         }
-        return (case-1);
+        return (cases-1);
     }
 
     if(choix == 'E')
     {
-        if(case < (conversion_case_j == nbcolonne))
+        if(cases < (conversion_cases_j == nbcolonne))
         {
             return -1; 
         }
-        return (case+1);
+        return (cases+1);
     }
 }

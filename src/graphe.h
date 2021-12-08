@@ -6,11 +6,11 @@ enum Couleur{ blanc=0, grey, noir};
 
 //enum Couleur toto=grey;
 
-class GRAPHE
+class graphe
 {
     public:
 
-    graphe();
+    graphe(int i,int j);
 
     ~graphe();
 
@@ -20,9 +20,12 @@ class GRAPHE
     int nbcolonne;
     int maxtab=nbligne*nbcolonne;
 
-    int tabgraph[maxtab];
+    int tabgraph[100000000];
 
-    initialiser_graphe()
+    void initialiser_graphe();
+
+    int voisins(int cases,char choix);
 
 
 };
+#endif _GRAPHE
