@@ -49,7 +49,12 @@ void graphe::affichergraphe()
 
     for(int i=0; i <maxtab;i++)
     {
-        cout<< tabgraph[i] << " ";
+        if(couleur[i]==2)
+        {
+            std::cout <<"\033[1;"<<31<<"m"<< tabgraph[i] << " " << "\033[0m";
+        }
+        else
+            cout<< tabgraph[i] << " ";
         if( ( (i+1) % nbcolonne ) ==0 )
         {
             cout<<endl;
@@ -59,8 +64,8 @@ void graphe::affichergraphe()
 
 int graphe::voisins(int cases,char choix)
 {
-    int convertion_cases_i = cases / (nbligne-1);
-    int conversion_cases_j = cases % (nbcolonne-1);
+    //int convertion_cases_i = cases / (nbligne-1);
+    int conversion_cases_j = (cases+1) % nbcolonne;
     if(choix == 'N')
     {
         if(cases < nbcolonne)
@@ -81,7 +86,7 @@ int graphe::voisins(int cases,char choix)
 
     if(choix == 'O')
     {
-        if(cases < (conversion_cases_j == 0))
+        if(conversion_cases_j == 1)
         {
             return -1; 
         }
@@ -90,7 +95,7 @@ int graphe::voisins(int cases,char choix)
 
     if(choix == 'E')
     {
-        if(cases > (conversion_cases_j == nbcolonne))
+        if(conversion_cases_j == 0)
         {
             return -1; 
         }
@@ -98,14 +103,63 @@ int graphe::voisins(int cases,char choix)
     }
 }
 
-int graphe::distance(int casedepart, int casearr)
+int graphe::dist(int casedepart, int casearr)
 { 
-    int convertion_cases_idepart = casedepart / (nbligne-1); //1D --> 3D
-    int conversion_cases_jdepart = casedepart  % (nbcolonne-1);
+    //int convertion_cases_idepart = casedepart / (nbligne-1); //1D --> 3D
+    //int conversion_cases_jdepart = casedepart  % (nbcolonne-1);
 
-    int convertion_cases_iarrivee = casearr / (nbligne-1);
-    int conversion_cases_jarrivee = casearr % (nbcolonne-1);
+    //int convertion_cases_iarrivee = casearr / (nbligne-1);
+    //int conversion_cases_jarrivee = casearr % (nbcolonne-1);
     int distance = sqrt( ((casearr - casedepart) * (casearr - casedepart))+ ( (tabgraph[casedepart] - tabgraph[casearr]) * (tabgraph[casedepart] - tabgraph[casearr]) ));
 
     return distance;
+}
+
+void graphe::dijkstra(int depart, int arrive) // blanc = 1 // 2 = rouge // 3 = gris
+{
+    int min;
+    int actu=depart;
+    min = dist(depart,arrive);
+    for( int i = 0; i<maxtab; i++ )
+    {
+        couleur[i]=1;
+    }
+    while(actu != arrive)
+    {
+        couleur[actu]=2;
+        int N=voisins(actu,'N');
+        int S=voisins(actu,'S');
+        int O=voisins(actu,'O');
+        int E=voisins(actu,'E');
+
+        std::cout<<std::endl;
+        std::cout<<N<<std::endl;
+        std::cout<<S<<std::endl;
+        std::cout<<O<<std::endl;
+        std::cout<<E<<std::endl;
+        std::cout<<std::endl;
+
+        if(dist(N,arrive)<min && couleur[N] != 2)
+        {
+            actu = N;
+            min=dist(N,arrive);
+        }
+        if(dist(S,arrive)<min && couleur[S] != 2)
+        {
+            actu = S;
+            min=dist(S,arrive);
+        }
+        if(dist(O,arrive)<min && couleur[O] != 2)
+        {
+            actu = O;
+            min=dist(O,arrive);
+        }
+        if(dist(E,arrive)<min && couleur[E] != 2)
+        {
+            actu = E;
+            min=dist(E,arrive);
+        }
+    }
+
+
 }

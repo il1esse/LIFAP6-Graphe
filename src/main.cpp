@@ -5,17 +5,21 @@ using namespace std;
 int main()
 {
     graphe graphe1(10,10);
-    graphe1.initialiser_graphe_fichier("a");
-    graphe1.affichergraphe();
-    int a = graphe1.voisins(0,'N');
-    int b = graphe1.voisins(0,'S');
-    int c = graphe1.voisins(0,'E');
-    int d = graphe1.voisins(0,'O');
+    //graphe1.initialiser_graphe_fichier("a");
+    graphe1.initialiser_graphe();
+    graphe1.dijkstra(0,99);
 
-    int a2 = graphe1.voisins(99,'N');
-    int b2 = graphe1.voisins(99,'S');
-    int c2 = graphe1.voisins(99,'E');
-    int d2 = graphe1.voisins(99,'O');
+    graphe1.affichergraphe();
+/*   
+    int a = graphe1.voisins(6,'N');
+    int b = graphe1.voisins(6,'S');
+    int c = graphe1.voisins(6,'O');
+    int d = graphe1.voisins(6,'E');
+
+    int a2 = graphe1.voisins(10,'N');
+    int b2 = graphe1.voisins(10,'S');
+    int c2 = graphe1.voisins(10,'O');
+    int d2 = graphe1.voisins(10,'E');
 
     cout<<endl;
     cout<<endl;
@@ -39,10 +43,29 @@ int main()
     cout<<endl;
     cout<<endl;
 
-    int dist = graphe1.distance(1,2);
+    int dist = graphe1.dist(1,2);
     cout<<dist;
 
     cout<<endl;
     cout<<endl;
-    return 0;
+
+
+
+            //std::cout <<"\033[1;"<<31<<"m"<< "test" << "\033[0m";
+            // On rÃ©cupÃ¨re l'indice n de la couleur d'affichage puis on affiche n
+
+        std::cout << std::endl;
+    
+        /*
+         for (i = 0; i < 11; i++) {
+         for (j = 0; j < 10; j++) {
+         n = 10*i + j; // Certaines valeurs de n correspondent Ã  des couleurs
+         if (n > 108) break;
+         std::printf("\033[%dm Couleur %3d\033[m",n,n);
+         // On rÃ©cupÃ¨re l'indice n de la couleur d'affichage puis on affiche n
+         }
+         printf("\n");
+         }
+    }
+    return 0;*/
 }

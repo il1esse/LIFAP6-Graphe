@@ -16,8 +16,11 @@ class graphe
     void initialiser_graphe();
     void affichergraphe();
     int voisins(int cases,char choix);
-    int distance(int casedepart, int casearr); 
+    int dist(int casedepart, int casearr); 
     void initialiser_graphe_fichier(const char * nomFichier);
+
+    void dijkstra(int depart,int arrive);
+
 
     private:
 
@@ -26,6 +29,7 @@ class graphe
 
     
     int tabgraph[maxtab];
+    int couleur[maxtab];
 
     
 
