@@ -2,7 +2,7 @@
 #define _GRAPHE
 
 enum Couleur{ blanc=0, grey, noir};
-const int maxtab=100;
+const int maxtab=16;
 
 //enum Couleur toto=grey;
 
@@ -15,7 +15,8 @@ class graphe
     //~graphe();
     void initialiser_graphe();
     void affichergraphe();
-    int voisins(int cases,char choix);
+    int voisinsvaleur(int cases,char choix);
+    int voisinscase(int cases,char choix);
     int dist(int casedepart, int casearr); 
     void initialiser_graphe_fichier(const char * nomFichier);
 

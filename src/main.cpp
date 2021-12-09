@@ -4,10 +4,10 @@
 using namespace std;
 int main()
 {
-    graphe graphe1(10,10);
+    graphe graphe1(4,4);
     //graphe1.initialiser_graphe_fichier("a");
     graphe1.initialiser_graphe();
-    graphe1.dijkstra(0,99);
+    graphe1.dijkstra(0,5);
 
     graphe1.affichergraphe();
 /*   
