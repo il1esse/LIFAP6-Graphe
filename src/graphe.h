@@ -2,7 +2,7 @@
 #define _GRAPHE
 
 enum Couleur{ blanc=0, grey, noir};
-const int maxtab=16;
+const int maxtab=100;
 
 //enum Couleur toto=grey;
 

@@ -131,7 +131,7 @@ int graphe::voisinscase(int cases,char choix)
 
     if(choix == 'S')
     {
-        if(cases > (nbcolonne*(nbligne-1)))
+        if(cases >= (nbcolonne*(nbligne-1)))
         {
             return -1; 
         }
@@ -195,44 +195,44 @@ void graphe::dijkstra(int depart, int arrive) // blanc = 1 // 2 = rouge // 3 = g
         std::cout<<std::endl;
 
         int min2;
-        if(N !=-1)
+        if(N !=-1 && couleur[N] != 2)
         {
-            int min2 = dist(N,arrive);
+            min2 = dist(N,arrive);
         }
-        else if (S !=-1)
+        else if (S !=-1 && couleur[S] != 2)
         {
-            int min2 = dist(S,arrive);
+            min2 = dist(S,arrive);
         }
-        else if (O !=-1)
+        else if (O !=-1 && couleur[O] != 2)
         {
-            int min2 = dist(O,arrive);
+            min2 = dist(O,arrive);
         }
-        else if (E !=-1)
+        else if (E !=-1 && couleur[E] != 2)
         {
-            int min2 = dist(E,arrive);
+            min2 = dist(E,arrive);
         }
 
 
 
-        if(N !=-1 && dist(N,arrive)<=min2 && couleur[N] != 2 )
+        if(N !=-1 && couleur[N] != 2 && (dist(N,arrive)<=min2 ))
         {
             actu = N;
             min2=dist(N,arrive);
             cout<<actu<<endl;
         }
-        if(S !=-1 && dist(S,arrive)<=min2 && couleur[S] != 2)
+        if(S !=-1 && couleur[S] != 2 && (dist(S,arrive)<=min2))
         {
             actu = S;
             min2=dist(S,arrive);
             cout<<actu<<endl;
         }
-        if(O !=-1 && dist(O,arrive)<=min2 && couleur[O] != 2)
+        if(O !=-1 && couleur[O] != 2 && (dist(O,arrive)<=min2))
         {
             actu = O;
             min2=dist(O,arrive);
             cout<<actu<<endl;
         }
-        if(E !=-1 && dist(E,arrive)<=min2 && couleur[E] != 2)
+        if(E !=-1 && couleur[E] != 2 && (dist(E,arrive)<=min2))
         {
             actu = E;
             min2=dist(E,arrive);

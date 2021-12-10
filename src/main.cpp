@@ -4,13 +4,25 @@
 using namespace std;
 int main()
 {
-    graphe graphe1(4,4);
+    graphe graphe1(10,10);
     //graphe1.initialiser_graphe_fichier("a");
     graphe1.initialiser_graphe();
-    graphe1.dijkstra(0,5);
+    graphe1.dijkstra(0,99);
 
     graphe1.affichergraphe();
-/*   
+
+/*
+    int a = graphe1.voisinscase(4,'N');
+    int b = graphe1.voisinscase(4,'S');
+    int c = graphe1.voisinscase(4,'O');
+    int d = graphe1.voisinscase(4,'E');
+
+    cout<<a<<endl;
+    cout<<b<<endl;
+    cout<<c<<endl;
+    cout<<d<<endl;
+    
+   
     int a = graphe1.voisins(6,'N');
     int b = graphe1.voisins(6,'S');
     int c = graphe1.voisins(6,'O');
