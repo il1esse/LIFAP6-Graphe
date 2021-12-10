@@ -19,7 +19,7 @@ class graphe
     int voisinscase(int cases,char choix);
     int dist(int casedepart, int casearr); 
     void initialiser_graphe_fichier(const char * nomFichier);
-
+    void convert(int casedepart);
     void dijkstra(int depart,int arrive);
 
 

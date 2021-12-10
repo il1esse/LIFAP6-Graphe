@@ -156,15 +156,21 @@ int graphe::voisinscase(int cases,char choix)
         return cases+1;
     }
 }
-
+void graphe::convert(int casedepart)
+{
+    int convertion_cases_idepart = casedepart / (nbligne); //1D --> 3D
+    int conversion_cases_jdepart = casedepart  % (nbcolonne);
+    cout<<"je suis la valeur i (ligne) "<<convertion_cases_idepart <<endl;
+    cout<<"je suis la valeur j(colonne) "<<conversion_cases_jdepart<<endl;
+}
 int graphe::dist(int casedepart, int casearr)
 { 
-    //int convertion_cases_idepart = casedepart / (nbligne-1); //1D --> 3D
-    //int conversion_cases_jdepart = casedepart  % (nbcolonne-1);
+    int idep = casedepart / (nbligne); //1D --> 3D
+    int jdep = casedepart  % (nbcolonne);
 
-    //int convertion_cases_iarrivee = casearr / (nbligne-1);
-    //int conversion_cases_jarrivee = casearr % (nbcolonne-1);
-    int distance = sqrt( ((casearr - casedepart) * (casearr - casedepart))+ ( (tabgraph[casedepart] - tabgraph[casearr]) * (tabgraph[casedepart] - tabgraph[casearr]) ));
+    int iarr = casearr / (nbligne);
+    int jarr = casearr % (nbcolonne);
+    int distance = sqrt( ((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep)) + ( (tabgraph[casedepart] - tabgraph[casearr]) * (tabgraph[casedepart] - tabgraph[casearr]) ));
 
     return distance;
 }

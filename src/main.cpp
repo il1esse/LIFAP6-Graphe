@@ -6,10 +6,14 @@ int main()
 {
     graphe graphe1(10,10);
     //graphe1.initialiser_graphe_fichier("a");
-    graphe1.initialiser_graphe();
-    graphe1.dijkstra(0,99);
-
+    graphe1.initialiser_graphe_fichier("b");
+    //graphe1.convert(20);
+    graphe1.dijkstra(0,14);
     graphe1.affichergraphe();
+
+    //cout<<graphe1.dist(0,1)<<endl;
+    //cout<<"case1"<<graphe1.dist(1,40)<<endl;
+    //cout<<"case10"<<graphe1.dist(10,40)<<endl;
 
 /*
     int a = graphe1.voisinscase(4,'N');

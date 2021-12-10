@@ -61,6 +61,6 @@ int main()
   std::cin >> n;
   creeFichierEntiers(fich,n);
   std::cout << "Affichage des entiers contenu dans le fichier" << std::endl;*/
-  litFichierEntiers("b");
+  litFichierEntiers("a");
   return 0;
 }
