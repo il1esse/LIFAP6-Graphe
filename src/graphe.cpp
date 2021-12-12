@@ -5,13 +5,33 @@
 #include <cstdlib> //exit
 #include <string>
 #include <random>
+#include <queue>
 
 using namespace std;
+
+/*using astar = std::pair<int,float>;// ID , distance + heurisique
+    static auto cmp = [](const astar& a,const astar& b) {
+        return a.second > b.second;
+    };
+    std::priority_queue<astar, std::vector<astar>, decltype(cmp)> Q(cmp);
+*/
+
+//typedef pair<int,int> pi;
+
+struct OOrder
+{
+    bool operator()(const Noeud &n1, const Noeud &n2)
+    {
+        return n1.heuristique >= n2.heuristique;
+    }
+};
+
+
+
 graphe::graphe(int i,int j)
 {
     nbligne = i;
     nbcolonne = j;
-
 }
 
 void graphe::initialiser_graphe()
@@ -22,6 +42,16 @@ void graphe::initialiser_graphe()
         tabgraph[i] = r;
     } 
 }
+
+/*
+bool graphe::compare2Noeuds(Noeud n1, Noeud n2)
+{
+    int distancen1 = dist(n1.caseactu,arrive);
+    int distancen2 = dist(n2.caseactu,arrive);
+    if(distancen1 < distancen2)
+        return true;
+
+}*/
 
 void graphe::initialiser_graphe_fichier(const char * nomFichier)
 //preconditions : nomFichier chaine de caracteres designant le nom d'un fichier
@@ -156,6 +186,7 @@ int graphe::voisinscase(int cases,char choix)
         return cases+1;
     }
 }
+
 void graphe::convert(int casedepart)
 {
     int convertion_cases_idepart = casedepart / (nbligne); //1D --> 3D
@@ -163,6 +194,7 @@ void graphe::convert(int casedepart)
     cout<<"je suis la valeur i (ligne) "<<convertion_cases_idepart <<endl;
     cout<<"je suis la valeur j(colonne) "<<conversion_cases_jdepart<<endl;
 }
+
 int graphe::dist(int casedepart, int casearr)
 { 
     int idep = casedepart / (nbligne); //1D --> 3D
@@ -170,7 +202,11 @@ int graphe::dist(int casedepart, int casearr)
 
     int iarr = casearr / (nbligne);
     int jarr = casearr % (nbcolonne);
-    int distance = sqrt( ((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep)) + ( (tabgraph[casedepart] - tabgraph[casearr]) * (tabgraph[casedepart] - tabgraph[casearr]) ));
+    //((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep))
+    
+    //int distance = sqrt( ((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep)) + ( (tabgraph[casearr] - tabgraph[casedepart]) * (tabgraph[casearr] - tabgraph[casedepart]) ));
+
+    int distance = sqrt( ((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep)) ) ;
 
     return distance;
 }
@@ -248,4 +284,76 @@ void graphe::dijkstra(int depart, int arrive) // blanc = 1 // 2 = rouge // 3 = g
     }
 
 
+}
+
+void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 = gris
+{
+    priority_queue<Noeud, vector<Noeud>,OOrder> pqueue;
+
+    //int min;
+    int actu=depart;
+    //min = dist(depart,arrive);
+
+    for( int i = 0; i<maxtab; i++ )
+    {
+        couleur[i]=1;
+    }
+    while(actu != arrive)
+    {
+        couleur[actu]=2;
+        int N=voisinscase(actu,'N');
+        int S=voisinscase(actu,'S');
+        int O=voisinscase(actu,'O');
+        int E=voisinscase(actu,'E');
+
+        std::cout<<std::endl;
+        std::cout<<N<<std::endl;
+        std::cout<<S<<std::endl;
+        std::cout<<O<<std::endl;
+        std::cout<<E<<std::endl;
+        std::cout<<std::endl;
+
+        int min2;
+
+        Noeud n1;
+        n1.caseactu=N;
+        n1.distanceavecledepart=dist(n1.caseactu,depart);
+        n1.heuristique = dist(n1.caseactu, arrive);
+
+        Noeud n2;
+        n2.caseactu=S;
+        n2.distanceavecledepart=dist(n2.caseactu,depart);
+        n2.heuristique= dist(n2.caseactu, arrive);;
+
+        Noeud n3;
+        n3.caseactu=O;
+        n3.distanceavecledepart=dist(n3.caseactu,depart);
+        n3.heuristique = dist(n3.caseactu, arrive);;
+
+        Noeud n4;
+        n4.caseactu=E;
+        n4.distanceavecledepart=dist(n4.caseactu,depart);
+        n4.heuristique = dist(n4.caseactu, arrive);;
+        
+        if((n1.caseactu != -1)&&(couleur[n1.caseactu] !=2))
+            pqueue.push(n1);
+        if((n2.caseactu != -1)&&(couleur[n2.caseactu] !=2))
+            pqueue.push(n2);
+        if((n3.caseactu != -1)&&(couleur[n3.caseactu] !=2))
+            pqueue.push(n3);
+        if((n4.caseactu != -1)&&(couleur[n4.caseactu] !=2))
+            pqueue.push(n4);
+        //pqueue.pop();
+
+
+        Noeud n;
+        n = pqueue.top();
+        
+        pqueue.pop();
+        actu = n.caseactu;
+        couleur[actu] = 2;
+        affichergraphe();
+    }
+
+    
 }

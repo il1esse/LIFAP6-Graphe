@@ -7,8 +7,9 @@ int main()
     graphe graphe1(10,10);
     //graphe1.initialiser_graphe_fichier("a");
     graphe1.initialiser_graphe_fichier("b");
-    //graphe1.convert(20);
-    graphe1.dijkstra(0,14);
+   // graphe1.convert(20);
+    graphe1.algoa(depart,arrive);
+    
     graphe1.affichergraphe();
 
     //cout<<graphe1.dist(0,1)<<endl;

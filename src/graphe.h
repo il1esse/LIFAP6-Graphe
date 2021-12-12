@@ -4,7 +4,17 @@
 enum Couleur{ blanc=0, grey, noir};
 const int maxtab=100;
 
+const int arrive = 98;
+const int depart = 0;
 //enum Couleur toto=grey;
+struct Noeud 
+{
+    int caseactu; // noeud actuelle
+    int distanceavecledepart; // distance aentre le noeud actuelle et le depart
+    int heuristique;
+
+    
+};
 
 class graphe
 {
@@ -21,8 +31,8 @@ class graphe
     void initialiser_graphe_fichier(const char * nomFichier);
     void convert(int casedepart);
     void dijkstra(int depart,int arrive);
-
-
+    void algoa(int depart, int arrive);
+    bool compare2Noeuds(Noeud n1, Noeud n2);
     private:
 
     int nbligne;
