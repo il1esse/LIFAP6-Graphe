@@ -300,7 +300,7 @@ void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 
     }
     while(actu != arrive)
     {
-        couleur[actu]=2;
+        couleur[actu]=3;
         int N=voisinscase(actu,'N');
         int S=voisinscase(actu,'S');
         int O=voisinscase(actu,'O');
@@ -313,27 +313,29 @@ void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 
         std::cout<<E<<std::endl;
         std::cout<<std::endl;
 
-        int min2;
-
         Noeud n1;
         n1.caseactu=N;
         n1.distanceavecledepart=dist(n1.caseactu,depart);
         n1.heuristique = dist(n1.caseactu, arrive);
+        n1.pred = actu; 
 
         Noeud n2;
         n2.caseactu=S;
         n2.distanceavecledepart=dist(n2.caseactu,depart);
-        n2.heuristique= dist(n2.caseactu, arrive);;
+        n2.heuristique= dist(n2.caseactu, arrive);
+        n2.pred = actu; 
 
         Noeud n3;
         n3.caseactu=O;
         n3.distanceavecledepart=dist(n3.caseactu,depart);
-        n3.heuristique = dist(n3.caseactu, arrive);;
+        n3.heuristique = dist(n3.caseactu, arrive);
+        n3.pred = actu; 
 
         Noeud n4;
         n4.caseactu=E;
         n4.distanceavecledepart=dist(n4.caseactu,depart);
-        n4.heuristique = dist(n4.caseactu, arrive);;
+        n4.heuristique = dist(n4.caseactu, arrive);
+        n4.pred = actu; 
         
         if((n1.caseactu != -1)&&(couleur[n1.caseactu] !=2))
             pqueue.push(n1);
@@ -351,9 +353,19 @@ void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 
         
         pqueue.pop();
         actu = n.caseactu;
-        couleur[actu] = 2;
+
+        if(actu == arrive)
+        {
+            int temp = actu;
+            while (temp !=depart)
+            {
+                couleur[temp]=2;
+                temp = n.pred;
+            }
+            
+        }
+        
         affichergraphe();
     }
 
-    
 }

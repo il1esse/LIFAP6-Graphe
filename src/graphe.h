@@ -12,7 +12,7 @@ struct Noeud
     int caseactu; // noeud actuelle
     int distanceavecledepart; // distance aentre le noeud actuelle et le depart
     int heuristique;
-
+    int pred;
     
 };
 

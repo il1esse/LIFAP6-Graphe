@@ -6,7 +6,7 @@ int main()
 {
     graphe graphe1(10,10);
     //graphe1.initialiser_graphe_fichier("a");
-    graphe1.initialiser_graphe_fichier("b");
+    graphe1.initialiser_graphe();
    // graphe1.convert(20);
     graphe1.algoa(depart,arrive);
     
