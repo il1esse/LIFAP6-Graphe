@@ -4,7 +4,7 @@
 enum Couleur{ blanc=0, grey, noir};
 const int maxtab=100;
 
-const int arrive = 98;
+const int arrive = 40;
 const int depart = 0;
 //enum Couleur toto=grey;
 struct Noeud 

@@ -202,12 +202,16 @@ int graphe::dist(int casedepart, int casearr)
 
     int iarr = casearr / (nbligne);
     int jarr = casearr % (nbcolonne);
+
+    int adep = tabgraph[casedepart];
+    int aarr = tabgraph[casearr];
     //((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep))
     
     //int distance = sqrt( ((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep)) + ( (tabgraph[casearr] - tabgraph[casedepart]) * (tabgraph[casearr] - tabgraph[casedepart]) ));
 
     int distance = sqrt( ((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep)) ) ;
-
+    
+    //int distance = sqrt (((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep)) + ((aarr-adep)*(aarr-adep)));
     return distance;
 }
 
@@ -288,11 +292,18 @@ void graphe::dijkstra(int depart, int arrive) // blanc = 1 // 2 = rouge // 3 = g
 
 void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 = gris
 {
+    
     priority_queue<Noeud, vector<Noeud>,OOrder> pqueue;
-
     //int min;
-    int actu=depart;
+    //int actu=depart;
+    int actu;
     //min = dist(depart,arrive);
+
+    Noeud ndepart;
+    ndepart.caseactu=depart;
+    ndepart.distanceavecledepart=0;
+    ndepart.heuristique = dist(ndepart.caseactu, arrive);
+    pqueue.push(ndepart);
 
     for( int i = 0; i<maxtab; i++ )
     {
@@ -300,7 +311,15 @@ void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 
     }
     while(actu != arrive)
     {
-        couleur[actu]=3;
+        Noeud n;
+        n = pqueue.top();
+        
+        couleur[n.caseactu]=2;
+        
+        pqueue.pop();
+        actu = n.caseactu;
+        
+        //couleur[actu]=2;
         int N=voisinscase(actu,'N');
         int S=voisinscase(actu,'S');
         int O=voisinscase(actu,'O');
@@ -317,26 +336,37 @@ void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 
         n1.caseactu=N;
         n1.distanceavecledepart=dist(n1.caseactu,depart);
         n1.heuristique = dist(n1.caseactu, arrive);
-        n1.pred = actu; 
+        //n1.pred = actu; 
+        if(couleur[n1.caseactu] !=2)
+            couleur[n1.caseactu]=3;
 
         Noeud n2;
         n2.caseactu=S;
         n2.distanceavecledepart=dist(n2.caseactu,depart);
         n2.heuristique= dist(n2.caseactu, arrive);
-        n2.pred = actu; 
+        //n2.pred = actu; 
+        //couleur[n2.caseactu]=3;
+        if(couleur[n2.caseactu] !=2)
+            couleur[n2.caseactu]=3;
 
         Noeud n3;
         n3.caseactu=O;
         n3.distanceavecledepart=dist(n3.caseactu,depart);
         n3.heuristique = dist(n3.caseactu, arrive);
-        n3.pred = actu; 
+        //n3.pred = actu; 
+        //couleur[n3.caseactu]=3;
+        if(couleur[n3.caseactu] !=2)
+            couleur[n3.caseactu]=3;
 
         Noeud n4;
         n4.caseactu=E;
         n4.distanceavecledepart=dist(n4.caseactu,depart);
         n4.heuristique = dist(n4.caseactu, arrive);
-        n4.pred = actu; 
-        
+        //n4.pred = actu; 
+        //couleur[n4.caseactu]=3;
+        if(couleur[n4.caseactu] !=2)
+            couleur[n4.caseactu]=3;
+
         if((n1.caseactu != -1)&&(couleur[n1.caseactu] !=2))
             pqueue.push(n1);
         if((n2.caseactu != -1)&&(couleur[n2.caseactu] !=2))
@@ -348,13 +378,10 @@ void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 
         //pqueue.pop();
 
 
-        Noeud n;
-        n = pqueue.top();
         
-        pqueue.pop();
-        actu = n.caseactu;
+        
 
-        if(actu == arrive)
+        /*if(actu == arrive)
         {
             int temp = actu;
             while (temp !=depart)
@@ -363,7 +390,7 @@ void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 
                 temp = n.pred;
             }
             
-        }
+        }*/
         
         affichergraphe();
     }
