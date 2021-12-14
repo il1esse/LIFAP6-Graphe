@@ -4,7 +4,7 @@
 enum Couleur{ blanc=0, grey, noir};
 const int maxtab=100;
 
-const int arrive = 3;
+const int arrive = 2;
 const int depart = 0;
 //enum Couleur toto=grey;
 

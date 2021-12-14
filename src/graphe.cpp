@@ -73,6 +73,10 @@ void graphe::affichergraphe()
         {
             std::cout <<"\033[1;"<<31<<"m"<< tabgraph[i] << " " << "\033[0m";
         }
+        else if(couleur[i]==3)
+        {
+            std::cout <<"\033[1;"<<30<<"m"<< tabgraph[i] << " " << "\033[0m";
+        }
         else
             cout<< tabgraph[i] << " ";
         if( ( (i+1) % nbcolonne ) ==0 )
