@@ -2,9 +2,9 @@
 #define _GRAPHE
 
 enum Couleur{ blanc=0, grey, noir};
-const int maxtab=9;
+const int maxtab=100;
 
-const int arrive = 7;
+const int arrive = 3;
 const int depart = 0;
 //enum Couleur toto=grey;
 
@@ -18,12 +18,12 @@ struct Noeud
     */
 };
 
+
 class graphe
 {
     public:
 
     graphe(int i,int j);
-
     //~graphe();
     void algoafinal(int depart, int arrive);
     void initialiser_graphe();
