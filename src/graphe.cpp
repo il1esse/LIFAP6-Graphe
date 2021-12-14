@@ -266,7 +266,7 @@ void graphe::algoafinal(int depart, int arrive)
         int dnv_N =  dist(case_actu,N);
         Nord.prio = dn + dnv_N + dist(case_actu,arrive);
         cout<<Nord.prio<<endl;
-        if((N != -1) )
+        if((N != -1) && ((dn + dnv_N) < distance[N]) )
             pqueue.push(Nord);
         if(couleur[N]  == 1)
         {
@@ -290,7 +290,7 @@ void graphe::algoafinal(int depart, int arrive)
         int dnv_S =  dist(case_actu,S);
         Sud.prio = dn + dnv_S + dist(case_actu,arrive);
         cout<<Sud.prio<<endl;
-        if((S != -1))
+        if((S != -1) && ((dn + dnv_S) < distance[S]))
             pqueue.push(Sud);
         if(couleur[S] == 1)
         {
@@ -312,7 +312,7 @@ void graphe::algoafinal(int depart, int arrive)
         Ouest.id = O;
         int dnv_O =  dist(case_actu,O);
         Ouest.prio = dn + dnv_O + dist(case_actu,arrive);
-        if((O != -1))
+        if((O != -1) && ((dn + dnv_O) < distance[O]))
             pqueue.push(Ouest);
         if(couleur[O] == 1)
         {
@@ -333,9 +333,10 @@ void graphe::algoafinal(int depart, int arrive)
         Noeud Est;
         Est.id = E;
         int dnv_E =  dist(case_actu,E);
-        if((E != -1))
-            pqueue.push(Est);
         Est.prio = dn + dnv_E + dist(case_actu,arrive);
+        if((E != -1) && ((dn + dnv_E) < distance[E]))
+            pqueue.push(Est);
+
         if(couleur[E] == 1)
         {
             pred[E]=case_actu;
@@ -363,7 +364,7 @@ void graphe::algoafinal(int depart, int arrive)
             
         }
     }
-    
-   
+    cout<<endl;
+    cout<<distance[arrive]<<endl;
      affichergraphe();
 }
