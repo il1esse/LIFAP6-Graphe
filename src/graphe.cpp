@@ -22,7 +22,7 @@ struct OOrder
 {
     bool operator()(const Noeud &n1, const Noeud &n2)
     {
-        return n1.heuristique >= n2.heuristique;
+        return n1.prio >= n2.prio;
     }
 };
 
@@ -42,16 +42,6 @@ void graphe::initialiser_graphe()
         tabgraph[i] = r;
     } 
 }
-
-/*
-bool graphe::compare2Noeuds(Noeud n1, Noeud n2)
-{
-    int distancen1 = dist(n1.caseactu,arrive);
-    int distancen2 = dist(n2.caseactu,arrive);
-    if(distancen1 < distancen2)
-        return true;
-
-}*/
 
 void graphe::initialiser_graphe_fichier(const char * nomFichier)
 //preconditions : nomFichier chaine de caracteres designant le nom d'un fichier
@@ -209,88 +199,13 @@ int graphe::dist(int casedepart, int casearr)
     
     //int distance = sqrt( ((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep)) + ( (tabgraph[casearr] - tabgraph[casedepart]) * (tabgraph[casearr] - tabgraph[casedepart]) ));
 
-    int distance = sqrt( ((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep)) ) ;
+    //int distance = sqrt( ((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep)) ) ;
     
-    //int distance = sqrt (((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep)) + ((aarr-adep)*(aarr-adep)));
+    int distance = sqrt (((iarr-idep)*(iarr-idep)) + ((jarr-jdep)*(jarr-jdep)) + ((aarr-adep)*(aarr-adep)));
     return distance;
 }
 
-void graphe::dijkstra(int depart, int arrive) // blanc = 1 // 2 = rouge // 3 = gris
-{
-    int min;
-    int actu=depart;
-    min = dist(depart,arrive);
-
-    for( int i = 0; i<maxtab; i++ )
-    {
-        couleur[i]=1;
-    }
-    while(actu != arrive)
-    {
-        couleur[actu]=2;
-        int N=voisinscase(actu,'N');
-        int S=voisinscase(actu,'S');
-        int O=voisinscase(actu,'O');
-        int E=voisinscase(actu,'E');
-
-        std::cout<<std::endl;
-        std::cout<<N<<std::endl;
-        std::cout<<S<<std::endl;
-        std::cout<<O<<std::endl;
-        std::cout<<E<<std::endl;
-        std::cout<<std::endl;
-
-        int min2;
-        if(N !=-1 && couleur[N] != 2)
-        {
-            min2 = dist(N,arrive);
-        }
-        else if (S !=-1 && couleur[S] != 2)
-        {
-            min2 = dist(S,arrive);
-        }
-        else if (O !=-1 && couleur[O] != 2)
-        {
-            min2 = dist(O,arrive);
-        }
-        else if (E !=-1 && couleur[E] != 2)
-        {
-            min2 = dist(E,arrive);
-        }
-
-
-
-        if(N !=-1 && couleur[N] != 2 && (dist(N,arrive)<=min2 ))
-        {
-            actu = N;
-            min2=dist(N,arrive);
-            cout<<actu<<endl;
-        }
-        if(S !=-1 && couleur[S] != 2 && (dist(S,arrive)<=min2))
-        {
-            actu = S;
-            min2=dist(S,arrive);
-            cout<<actu<<endl;
-        }
-        if(O !=-1 && couleur[O] != 2 && (dist(O,arrive)<=min2))
-        {
-            actu = O;
-            min2=dist(O,arrive);
-            cout<<actu<<endl;
-        }
-        if(E !=-1 && couleur[E] != 2 && (dist(E,arrive)<=min2))
-        {
-            actu = E;
-            min2=dist(E,arrive);
-            cout<<actu<<endl;
-        }
-        couleur[actu]=2;
-    }
-
-
-}
-
-void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 = gris
+/*void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 = gris
 {
     
     priority_queue<Noeud, vector<Noeud>,OOrder> pqueue;
@@ -298,27 +213,32 @@ void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 
     //int actu=depart;
     int actu;
     //min = dist(depart,arrive);
-
+    Noeud temp2;
     Noeud ndepart;
     ndepart.caseactu=depart;
     ndepart.distanceavecledepart=0;
     ndepart.heuristique = dist(ndepart.caseactu, arrive);
+    ndepart.pred = -1;
     pqueue.push(ndepart);
-
+    int distance_totale = 0;
+    int k=0;
     for( int i = 0; i<maxtab; i++ )
     {
         couleur[i]=1;
     }
     while(actu != arrive)
     {
-        Noeud n;
-        n = pqueue.top();
+        Noeud temp;
+        temp = pqueue.top();
         
-        couleur[n.caseactu]=2;
+        pred[k] = temp.pred;
+        //couleur[temp.caseactu]=2;
         
         pqueue.pop();
-        actu = n.caseactu;
+
+        actu = temp.caseactu;
         
+        distance_totale =temp.distanceavecledepart;
         //couleur[actu]=2;
         int N=voisinscase(actu,'N');
         int S=voisinscase(actu,'S');
@@ -334,35 +254,35 @@ void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 
 
         Noeud n1;
         n1.caseactu=N;
-        n1.distanceavecledepart=dist(n1.caseactu,depart);
+        n1.distanceavecledepart= distance_totale + dist(n1.caseactu,actu);
         n1.heuristique = dist(n1.caseactu, arrive);
-        //n1.pred = actu; 
+        n1.pred = actu; 
         if(couleur[n1.caseactu] !=2)
             couleur[n1.caseactu]=3;
 
         Noeud n2;
         n2.caseactu=S;
-        n2.distanceavecledepart=dist(n2.caseactu,depart);
+        n2.distanceavecledepart= distance_totale + dist(n2.caseactu,actu);
         n2.heuristique= dist(n2.caseactu, arrive);
-        //n2.pred = actu; 
+        n2.pred = actu; 
         //couleur[n2.caseactu]=3;
         if(couleur[n2.caseactu] !=2)
             couleur[n2.caseactu]=3;
 
         Noeud n3;
         n3.caseactu=O;
-        n3.distanceavecledepart=dist(n3.caseactu,depart);
+        n3.distanceavecledepart= distance_totale + dist(n3.caseactu,actu);
         n3.heuristique = dist(n3.caseactu, arrive);
-        //n3.pred = actu; 
+        n3.pred = actu; 
         //couleur[n3.caseactu]=3;
         if(couleur[n3.caseactu] !=2)
             couleur[n3.caseactu]=3;
 
         Noeud n4;
         n4.caseactu=E;
-        n4.distanceavecledepart=dist(n4.caseactu,depart);
+        n4.distanceavecledepart= distance_totale + dist(n4.caseactu,actu);
         n4.heuristique = dist(n4.caseactu, arrive);
-        //n4.pred = actu; 
+        n4.pred = actu; 
         //couleur[n4.caseactu]=3;
         if(couleur[n4.caseactu] !=2)
             couleur[n4.caseactu]=3;
@@ -375,24 +295,171 @@ void graphe::algoa(int depart, int arrive) // blanc = 1 // 2 = rouge(noir) // 3 
             pqueue.push(n3);
         if((n4.caseactu != -1)&&(couleur[n4.caseactu] !=2))
             pqueue.push(n4);
-        //pqueue.pop();
-
-
-        
         
 
-        /*if(actu == arrive)
+        if(temp.caseactu == arrive)
         {
-            int temp = actu;
-            while (temp !=depart)
+            couleur[temp.caseactu]=2;
+            while ( pred[k] != -1)
             {
-                couleur[temp]=2;
-                temp = n.pred;
+                couleur[pred[k]]=2;
+                k=k-1;
             }
             
-        }*/
-        
+        }
+        cout<<endl;
+        cout<<endl;
+        cout<<"JE SUIS LAAAAAAAAA"<<endl;
+        cout<<endl;
+        cout<<endl;
+        cout<<"la distance est:"<<distance_totale<<endl;
+
         affichergraphe();
+        k=k+1;
     }
 
+}*/
+
+void graphe::algoafinal(int depart, int arrive)
+{
+    priority_queue<Noeud, vector<Noeud>,OOrder> pqueue;
+    float inf = std::numeric_limits<float>::infinity();
+    
+    for( int i = 0; i<maxtab; i++ )
+    {
+        pred[i]= -1;
+        couleur[i]= 1;
+        distance[i]= inf;
+    }
+
+    Noeud ndepart;
+    ndepart.id = depart;
+    ndepart.prio = 0 + dist(depart,arrive);
+    distance[depart] = 0;
+    pqueue.push(ndepart);
+    couleur[depart] = 2;
+
+    int case_actu = depart;
+    while(case_actu != arrive)
+    {
+        Noeud temp;
+        temp = pqueue.top();
+        
+        pqueue.pop();
+
+        case_actu = temp.id;
+        
+        int N=voisinscase(case_actu,'N');
+        int S=voisinscase(case_actu,'S');
+        int O=voisinscase(case_actu,'O');
+        int E=voisinscase(case_actu,'E');
+
+        std::cout<<std::endl;
+        std::cout<<N<<std::endl;
+        std::cout<<S<<std::endl;
+        std::cout<<O<<std::endl;
+        std::cout<<E<<std::endl;
+        std::cout<<std::endl;
+
+        int dn = distance[case_actu];
+
+        Noeud Nord;
+        Nord.id = N;
+        int dnv_N =  dist(case_actu,N);
+        Nord.prio = dn + dnv_N + dist(case_actu,arrive);
+        pqueue.push(Nord);
+        if(couleur[N]  == 1)
+        {
+            pred[N]=case_actu;
+            distance[N] = dn + dnv_N;
+            couleur[N]=3;
+        }
+        else if (couleur[N]== 3)
+        {
+            if(dn + dnv_N < distance[N])
+            {
+                pred[N]=case_actu;
+                distance[N] = dn + dnv_N;
+            }
+
+        }
+        
+
+        Noeud Sud;
+        Sud.id = S;
+        int dnv_S =  dist(case_actu,S);
+        Sud.prio = dn + dnv_S + dist(case_actu,arrive);
+        pqueue.push(Sud);
+        if(couleur[S] == 1)
+        {
+            pred[S]=case_actu;
+            distance[S] = dn + dnv_S;
+            couleur[S]=3;
+        }
+        else if (couleur[S]== 3)
+        {
+            if(dn + dnv_S < distance[S])
+            {
+                pred[S]=case_actu;
+                distance[S] = dn + dnv_S;
+            }
+
+        }
+
+        Noeud Ouest;
+        Ouest.id = O;
+        int dnv_O =  dist(case_actu,O);
+        Ouest.prio = dn + dnv_O + dist(case_actu,arrive);
+        pqueue.push(Ouest);
+        if(couleur[O] == 1)
+        {
+            pred[O]=case_actu;
+            distance[O] = dn + dnv_O;
+            couleur[O]=3;
+        }
+        else if (couleur[O] == 3)
+        {
+            if(dn + dnv_O < distance[O])
+            {
+                pred[O]=case_actu;
+                distance[O] = dn + dnv_O;
+            }
+
+        }
+
+        Noeud Est;
+        Est.id = E;
+        int dnv_E =  dist(case_actu,E);
+        pqueue.push(Est);
+        Est.prio = dn + dnv_E + dist(case_actu,arrive);
+        if(couleur[E] == 1)
+        {
+            pred[E]=case_actu;
+            distance[E] = dn + dnv_E;
+            couleur[E]=3;
+        }
+        else if (couleur[E] == 3)
+        {
+            if(dn + dnv_E < distance[E])
+            {
+                pred[E]=case_actu;
+                distance[E] = dn + dnv_E;
+            }
+
+        }
+
+        if(temp.id == arrive)
+        {
+            int k = temp.id;
+            while ( pred[k] != -1)
+            {
+                couleur[k]=2;
+                k=pred[k];
+            }
+            
+        }
+    }
+    
+   
+     affichergraphe();
 }
