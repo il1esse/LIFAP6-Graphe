@@ -9,14 +9,6 @@
 
 using namespace std;
 
-/*using astar = std::pair<int,float>;// ID , distance + heurisique
-    static auto cmp = [](const astar& a,const astar& b) {
-        return a.second > b.second;
-    };
-    std::priority_queue<astar, std::vector<astar>, decltype(cmp)> Q(cmp);
-*/
-
-//typedef pair<int,int> pi;
 
 struct OOrder
 {
@@ -25,8 +17,6 @@ struct OOrder
         return n1.prio >= n2.prio;
     }
 };
-
-
 
 graphe::graphe(int i,int j)
 {
@@ -56,7 +46,6 @@ void graphe::initialiser_graphe_fichier(const char * nomFichier)
   int i=0;
   while(ifs >> temp)
   {
-      //cout<<temp;
       tabgraph[i] = temp;
       i=i+1;
   }
@@ -84,19 +73,7 @@ void graphe::affichergraphe()
             cout<<endl;
         }
     }
-    cout<<endl;
-    cout<<endl;
-    cout<<endl;
-    
-    for(int j=0; j <maxtab;j++)
-    {
 
-        cout<< couleur[j] << " ";
-        if( ( (j+1) % nbcolonne ) ==0 )
-        {
-            cout<<endl;
-        }
-    }
 }
 
 int graphe::voisinsvaleur(int cases,char choix)
@@ -138,6 +115,7 @@ int graphe::voisinsvaleur(int cases,char choix)
         }
         return tabgraph[cases+1];
     }
+    return 0;
 }
 
 int graphe::voisinscase(int cases,char choix)
@@ -179,6 +157,7 @@ int graphe::voisinscase(int cases,char choix)
         }
         return cases+1;
     }
+    return 0;
 }
 
 void graphe::convert(int casedepart)
@@ -230,14 +209,14 @@ void graphe::algoafinal(int depart, int arrive)
 
     pqueue.push(ndepart);
 
-    couleur[depart] = 2;
+    couleur[depart] = 3;
 
     int case_actu = depart;
-    Noeud temp; 
+    
     
     while(case_actu != arrive)
     {
-        
+        Noeud temp; 
         temp = pqueue.top();
         pqueue.pop();
 
@@ -361,10 +340,11 @@ void graphe::algoafinal(int depart, int arrive)
                 couleur[k]=2;
                 k=pred[k];
             }
-            
+            couleur[k]=2;
         }
     }
     cout<<endl;
     cout<<distance[arrive]<<endl;
+    couleur[depart]=2;
      affichergraphe();
 }
